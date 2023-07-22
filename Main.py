@@ -34,9 +34,15 @@ def generateValuesInMachine(rows, cols, symbols):
     return columns
 
 def printSlotMachine(columns):
-    pass
     #Now, the columns list passed will have inner lists where the values will be present like rows even though those are
     #the values of column. So we need to convert those rows to columns. Here, we use a method called Transposing
+    for row in range(len(columns)): #len(columns) gives the total no. of columns
+          for i, col in enumerate(columns):   #We don't want to print | after last column. enumerate() gives index as well
+                                              #as items in the collection.
+              if i != len(columns) - 1: #len(columns) - 1 gives the maximum index position of columns list, i.e 2
+                print(col[row], end=" | ")
+              else:
+                  print(col[row])
 
 def credit():
     while True:
@@ -68,8 +74,8 @@ def main():
         if choice == 1:
             balance = credit()
             print("\nCurrent Balance:- $", balance)
-            line = getNoOfLines()
             while True:
+                line = getNoOfLines()
                 bet = getBet()
                 totalBet = bet * line
                 if totalBet <= balance:
@@ -78,6 +84,7 @@ def main():
                     print(f"You are betting ${bet} on {line} line/lines. Total Bet placed:- ${totalBet}")
                     slots = generateValuesInMachine(ROWS, COLS, symbols)
                     print(slots)    #To be commented later
+                    printSlotMachine(slots)
                 else:
                     print(f"Insufficient balance. Your Current Balance:- ${balance}")
         elif choice == 2:
