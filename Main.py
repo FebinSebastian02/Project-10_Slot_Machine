@@ -14,6 +14,11 @@ symbols = {"$": 3,
            "*": 4,
            "7": 6,
            "A": 8}  #Here, keys are the symbols and values are the number of symbols
+#Values of corresponding symbols
+symbolValues = {"$": 5,
+                "*": 4,
+                "7": 3,
+                "A": 2}
 def generateValuesInMachine(rows, cols, symbols):
     #Creating a list with all symbols
     reel = []
@@ -43,6 +48,20 @@ def printSlotMachine(columns):
                 print(col[row], end=" | ")
               else:
                   print(col[row])
+
+def checkWinnings(bet, line, columns, symbolValues):
+    winnings = 0
+    winningLines = []
+    for lin in range(line):#iterating through lines
+        symbol = columns[0][lin]#This gives the values in first column..
+        for col in columns: #iterating through columns
+            symbolToCheck = col[lin]
+            if symbol != symbolToCheck:
+                break   #breaks out of the for loop
+        else:   #for else statement. Winnings will be written here
+            winnings += symbolValues[symbol] * bet
+            winningLines.append(lin + 1)
+    return winnings,winningLines
 
 def credit():
     while True:
@@ -85,6 +104,9 @@ def main():
                     slots = generateValuesInMachine(ROWS, COLS, symbols)
                     print(slots)    #To be commented later
                     printSlotMachine(slots)
+                    winnings, winningLines = checkWinnings(bet, line, slots, symbolValues)
+                    print(f"You won ${winnings} on line", *winningLines)    # '*' is splat/unpack operator that pass every
+                                                                            #values from the list to this print().
                 else:
                     print(f"Insufficient balance. Your Current Balance:- ${balance}")
         elif choice == 2:
