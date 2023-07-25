@@ -10,7 +10,7 @@ MAX_BET = 100
 ROWS = 3
 COLS = 3
 #Symbols in each reel(column)
-symbols = {"$": 3,
+symbols = {"$": 2,
            "*": 4,
            "7": 6,
            "A": 8}  #Here, keys are the symbols and values are the number of symbols
@@ -86,31 +86,45 @@ def getBet():
             return bet
         else:
             print(f"Invalid bet amount entered. Please enter a valid amount to bet between {MIN_BET} and {MAX_BET}")
+
+def startSpin(balance):
+
+    line = getNoOfLines()
+    bet = getBet()
+    totalBet = bet * line
+    if totalBet <= balance:
+        print("\nEntered Lines:- ", line)
+        print("Placed Bet:- ", bet)
+        print(f"You are betting ${bet} on {line} line(s). Total Bet placed:- ${totalBet}")
+        input("\nPress Enter to Spin...")
+        slots = generateValuesInMachine(ROWS, COLS, symbols)
+        print(slots)  # To be commented later
+        printSlotMachine(slots)
+        winnings, winningLines = checkWinnings(bet, line, slots, symbolValues)
+        print(f"You won ${winnings} on line", *winningLines)  # '*' is splat/unpack operator that pass every
+        # values from the list to this print().
+        currentBalance = (balance - totalBet) + winnings
+        print("Current Balance:- $", currentBalance)
+        return currentBalance
+    else:
+        print(f"Insufficient balance. Your Current Balance:- ${balance}")
+        return balance
+
 def main():
     print("\n!!!Welcome to the Slot Machine!!!")
+    balance = credit()
+    print("\nAmount Credited:- $", balance)
     while True:
         choice = int(input("\nDo you wish to play...1) Yes 2) No"))
         if choice == 1:
-            balance = credit()
-            print("\nCurrent Balance:- $", balance)
             while True:
-                line = getNoOfLines()
-                bet = getBet()
-                totalBet = bet * line
-                if totalBet <= balance:
-                    print("\nEntered Lines:- ", line)
-                    print("Placed Bet:- ", bet)
-                    print(f"You are betting ${bet} on {line} line/lines. Total Bet placed:- ${totalBet}")
-                    slots = generateValuesInMachine(ROWS, COLS, symbols)
-                    print(slots)    #To be commented later
-                    printSlotMachine(slots)
-                    winnings, winningLines = checkWinnings(bet, line, slots, symbolValues)
-                    print(f"You won ${winnings} on line", *winningLines)    # '*' is splat/unpack operator that pass every
-                                                                            #values from the list to this print().
-                else:
-                    print(f"Insufficient balance. Your Current Balance:- ${balance}")
+                currentBalance = startSpin(balance)
+                balance = currentBalance
+                break
         elif choice == 2:
-            pass
+                print(f"\nPlease visit the Counter nearby to withdraw $",balance)
+                print("!!!See you soon!!!")
+                quit()
         else:
             print("Invalid option entered. Please enter a valid option...")
 
