@@ -6,7 +6,14 @@ Slot Machine is a program with which User can place bets and earn rewards by try
 	- while loop that was used to run the program continuously until the user runs out of cash.
 	- if else conditions that were used to take actions based on user's choice.
 	- dictionaries that were used to store the symbols and symbol values in a slot machine reel.
-	- list that was used to store reels of different columns
+	- list that was used to store reels of different columns.
 	- random module that was imported to use the choice function to randomly choose a value from a list.
-	- slice operator which was used to copy a list and Splat/Unpack operator which was used to fetch all values from a list
+	- slice operator which was used to copy a list and Splat/Unpack operator which was used to fetch all values from a list.
 	- for loops that were used to iterate through rows, columns etc.
+
+v1.0.1
+
+Slot Machine is a program with which User can place bets and earn rewards by trying their luck was created with:-
+	- same as v1.0.0.
+	- datetime module that was imported to use the now method in datetime class which fetches the current date and time that needs to printed in the receipt.
+	- a function to print a receipt into a text file.

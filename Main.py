@@ -1,5 +1,6 @@
 #imports are done
 import random
+from datetime import datetime
 
 #Global constants
 MAX_LINES = 3
@@ -92,37 +93,69 @@ def startSpin(balance):
     line = getNoOfLines()
     bet = getBet()
     totalBet = bet * line
+    winnings = 0
     if totalBet <= balance:
         print("\nEntered Lines:- ", line)
         print("Placed Bet:- ", bet)
         print(f"You are betting ${bet} on {line} line(s). Total Bet placed:- ${totalBet}")
         input("\nPress Enter to Spin...")
         slots = generateValuesInMachine(ROWS, COLS, symbols)
-        print(slots)  # To be commented later
+        # print(slots)  # To be commented later
         printSlotMachine(slots)
         winnings, winningLines = checkWinnings(bet, line, slots, symbolValues)
         print(f"You won ${winnings} on line", *winningLines)  # '*' is splat/unpack operator that pass every
         # values from the list to this print().
         currentBalance = (balance - totalBet) + winnings
         print("Current Balance:- $", currentBalance)
-        return currentBalance
+        return currentBalance, winnings, totalBet
     else:
+        totalBet = 0
         print(f"Insufficient balance. Your Current Balance:- ${balance}")
-        return balance
+        return balance, winnings, totalBet
+
+def getDateTime():
+    currentDateTime = datetime.now()
+    dateTime = currentDateTime.strftime("%d/%m/%Y - %H:%M:%S")
+    return dateTime
+def printReceipt(dateTime, name, currentBet, currentWinnings, balance):
+    file = open("Receipt.txt", 'w')
+    file.write("                                      RECEIPT      "
+               "\n////////////////////////////////////////////////////////////////////////////////////////////////////////////"
+               "\n	Player Name:- {}					Date - Time:- {}	"
+               "\n	Total amount bet:- ${}"
+               "\n	Winnings:- ${}"
+               "\n	Savings:- ${}"
+               "\n////////////////////////////////////////////////////////////////////////////////////////////////////////////"
+               "\n\n	            "
+      "Thank you for playing with us. Visit again soon...".format(name, dateTime, currentBet, currentWinnings, balance))
+    file.close()
 
 def main():
     print("\n!!!Welcome to the Slot Machine!!!")
+    name = input("\nPlease enter your name...")
     balance = credit()
     print("\nAmount Credited:- $", balance)
+    winningList = []
+    currentBetList = []
     while True:
         choice = int(input("\nDo you wish to play...1) Yes 2) No"))
         if choice == 1:
             while True:
-                currentBalance = startSpin(balance)
+                currentBalance, winnings, totalBet = startSpin(balance)
                 balance = currentBalance
+                winningList.append(winnings)
+                currentBetList.append(totalBet)
                 break
         elif choice == 2:
-                print(f"\nPlease visit the Counter nearby to withdraw $",balance)
+                currentWinnings = 0
+                for i in winningList:
+                    currentWinnings += i
+                currentBet = 0
+                for i in currentBetList:
+                    currentBet += i
+                dateTime = getDateTime()
+                printReceipt(dateTime, name, currentBet, currentWinnings, balance)
+                print(f"\nPlease visit the Counter nearby with the Receipt generated to withdraw $",balance)
                 print("!!!See you soon!!!")
                 quit()
         else:
