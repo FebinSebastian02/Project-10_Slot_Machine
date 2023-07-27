@@ -12,6 +12,7 @@ Steps done:-
 	- For loops were used to iterate through rows, columns etc.
 	- Datetime module was imported to fetch current date and time
 	- A receipt with few details was created which was printed in a text file once the user chooses to quit the game.
+	- playsound() is used to add sound effect during slot machine spin
 
 Code Walkthrough:-
 	- With the calling of main(), the program starts execution.
