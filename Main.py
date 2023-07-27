@@ -1,6 +1,9 @@
 #imports are done
 import random
+import time
 from datetime import datetime
+from playsound import playsound
+from pathlib import Path
 
 #Global constants
 MAX_LINES = 3
@@ -99,6 +102,8 @@ def startSpin(balance):
         print("Placed Bet:- ", bet)
         print(f"You are betting ${bet} on {line} line(s). Total Bet placed:- ${totalBet}")
         input("\nPress Enter to Spin...")
+        audio1 = Path().cwd()/"1607230069_fruit-machine-jackpot-001_long.mp3"    #Path() gives the full path of the file
+        playsound(audio1)
         slots = generateValuesInMachine(ROWS, COLS, symbols)
         # print(slots)  # To be commented later
         printSlotMachine(slots)
