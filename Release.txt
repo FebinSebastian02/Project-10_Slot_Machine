@@ -17,4 +17,10 @@ Slot Machine is a program with which User can place bets and earn rewards by try
 	- same as v1.0.0.
 	- datetime module that was imported to use the now method in datetime class which fetches the current date and time that needs to printed in the receipt.
 	- a function to print a receipt into a text file.
-	- sound effect added during slot machine spin
+	
+
+v1.0.2
+
+Slot Machine is a program with which User can place bets and earn rewards by trying their luck was created with:-
+	- same as v1.0.1.
+	- sound effect added during slot machine spin 
